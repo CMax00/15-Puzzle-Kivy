@@ -1,5 +1,7 @@
 [app]
 
+android.accept_sdk_license = True
+
 title = 15 Puzzle
 package.name = puzzle15
 package.domain = org.deinname
