@@ -7,20 +7,17 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-
-    env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true 
+    runs-on: ubuntu-22.04 
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
       - name: Build APK with Buildozer
-        uses: digreatbrian/buildozer-action@v2
+        uses: ArtemSBulgakov/buildozer-action@v1
         with:
-          python-version: "3.11"
-          buildozer-cmd: buildozer -v android debug
+          command: buildozer -v android debug
+          buildozer_version: master 
 
       - name: Upload APK
         if: success()
