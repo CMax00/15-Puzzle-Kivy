@@ -7,17 +7,36 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04 
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Build APK with Buildozer
-        uses: kivy/buildozer-action@v1
+      - name: Set up Python
+        uses: actions/setup-python@v5       
         with:
-          command: buildozer -v android debug
-          buildozer_version: master 
+          python-version: '3.11'
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends \
+            git zip unzip openjdk-17-jdk python3-pip \
+            autoconf libtool pkg-config zlib1g-dev \
+            libncurses5-dev libncursesw5-dev libtinfo5 \
+            cmake libffi-dev libssl-dev automake \
+            ffmpeg libsdl2-dev libsdl2-image-dev \
+            libsdl2-mixer-dev libsdl2-ttf-dev libportmidi-dev
+
+      - name: Install Buildozer + Cython
+        run: |
+          python -m pip install --upgrade pip
+          pip install cython==0.29.37 buildozer
+
+      - name: Build APK with Buildozer
+        run: |
+          buildozer -v android debug
 
       - name: Upload APK
         if: success()
