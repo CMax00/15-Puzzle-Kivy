@@ -102,16 +102,16 @@ class MyApp(App):
             # leaves one space for the empty block
             if i <= (gridSize ** 2) - 2:
                 # converts number into x, y pos
-                x = i % 4
-                y = i // 4
+                x = i % gridSize
+                y = i // gridSize
 
                 # creates block and adds it to the layout
                 block = Block(x, y, i + 1)
                 layout.add_widget(block.button)
                 blocks.append(block)
             else:
-                x = i % 4
-                y = i // 4
+                x = i % gridSize
+                y = i // gridSize
                 empty = (x, y)
                 block = Block(x, y, 0)
                 layout.add_widget(block.button)
